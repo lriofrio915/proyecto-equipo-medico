@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function ProductForm() {
   const [form, setForm] = useState({
@@ -8,8 +9,11 @@ export default function ProductForm() {
     brand: '',
     model: '',
     category: '',
-    condition: ''
+    condition: '',
+    image: '',
   });
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,17 +24,10 @@ export default function ProductForm() {
 
     const stored = JSON.parse(localStorage.getItem('productos')) || [];
     const updated = [...stored, form];
-
     localStorage.setItem('productos', JSON.stringify(updated));
 
     alert('Equipo registrado (guardado en localStorage)');
-    setForm({
-      name: '',
-      brand: '',
-      model: '',
-      category: '',
-      condition: ''
-    });
+    router.push('/'); // Redirección automática al home
   };
 
   return (
